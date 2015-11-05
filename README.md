@@ -10,4 +10,4 @@ edit/ok switch between edit mode and showing mode.
   
 Because most of them are listviews with different contents, I have an ItemFragment which we can reuse maybe.
 
-todo: Interactions
+todo: appointment, client interactions
