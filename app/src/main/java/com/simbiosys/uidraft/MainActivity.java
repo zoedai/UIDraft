@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
                 Fragment clientDetailFragment = new ClientDetailFragment();
                 mFragmentManager.beginTransaction().replace(R.id.fragmentContent,
                         clientDetailFragment).addToBackStack(null).commit();
-                
+
             }
         });
 

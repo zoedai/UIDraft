@@ -76,12 +76,13 @@ public class ClientDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_client_detail, container, false);
         final Button editButton = (Button) view.findViewById(R.id.buttonEdit);
 //        editName = (EditText) view.findViewById(R.id.editText);
-        int cnt = ((ViewGroup) view).getChildCount();
+        ViewGroup group = ((ViewGroup) ((ViewGroup) view).getChildAt(0));
+        int cnt = group.getChildCount();
         int j = 0;
 
         editables = new EditText[cnt - 1];
         for (int i = 0; i < cnt; i++) {
-            View aView = ((ViewGroup) view).getChildAt(i);
+            View aView = group.getChildAt(i);
             if (aView instanceof EditText) {
                 editables[j++] = (EditText) aView;
             }
