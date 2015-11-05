@@ -9,3 +9,5 @@ Inside the detail page there are 3 buttons: edit/ok, travels to this client and 
 edit/ok switch between edit mode and showing mode.
   
 Because most of them are listviews with different contents, I have an ItemFragment which we can reuse maybe.
+
+todo: Interactions
