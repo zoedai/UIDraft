@@ -75,7 +75,9 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                DummyContent.ITEMS);
     }
 
     @Override

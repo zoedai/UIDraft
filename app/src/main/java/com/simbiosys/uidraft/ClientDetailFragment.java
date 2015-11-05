@@ -103,14 +103,28 @@ public class ClientDetailFragment extends Fragment {
             }
         });
 
+        Button gotoUpcoming = (Button) view.findViewById(R.id.btn_upcoming);
+        Button gotoReport = (Button) view.findViewById(R.id.btn_expense_report);
+        gotoUpcoming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(MainActivity.UPCOMING_EVENTS);
+            }
+        });
+        gotoReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(MainActivity.EXPENSE_REPORTS);
+            }
+        });
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(int fragmentType) {
 
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(fragmentType);
         }
     }
 
@@ -146,7 +160,7 @@ public class ClientDetailFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(int fragmentType);
 
     }
 

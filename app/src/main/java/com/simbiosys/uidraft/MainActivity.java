@@ -21,7 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
-        implements ClientFragment.OnFragmentInteractionListener,
+        implements
         ItemFragment.OnFragmentInteractionListener,
         ClientDetailFragment.OnFragmentInteractionListener
 {
@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity
     private CharSequence mTitle;
     private FragmentManager mFragmentManager;
     FloatingActionButton fab;
-//    private NavigationView mNavigationView;
+    private NavigationView mNavigationView;
+    public static final int UPCOMING_EVENTS = 1;
+    public static final int EXPENSE_REPORTS = 2;
 
 
     @Override
@@ -64,11 +66,23 @@ public class MainActivity extends AppCompatActivity
         // drawer stuff
         mMenuTitles = getResources().getStringArray(R.array.drawer_menu);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mTitle = mDrawerTitle = getTitle();
-//        mNavigationView = (NavigationView) findViewById(R.id.navi_menu);
+        //navi view implementation
+        mNavigationView = (NavigationView) findViewById(R.id.navi_menu);
+        setupDrawerContent(mNavigationView);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                item.setChecked(true);
+                selectItem(item.getItemId());
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
 
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+
+/*        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item, mMenuTitles));
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,6 +92,7 @@ public class MainActivity extends AppCompatActivity
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
+*/
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -97,6 +112,7 @@ public class MainActivity extends AppCompatActivity
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+
 //        if (savedInstanceState == null) {
 //            selectItem(0);
 //        }
@@ -107,13 +123,40 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void selectItem(int position) {
-        Fragment fragment = new ClientFragment();
 
 
-        switch (position) {
-            case 0:
-                fragment = new ClientFragment();
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+
+                new NavigationView.OnNavigationItemSelectedListener()
+                {
+
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem)
+                    {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }
+
+    private void selectItem(int itemId) {
+        Fragment fragment = new ItemFragment();
+
+
+        switch (itemId) {
+            case R.id.nav_clients:
+                fragment = new ItemFragment();
+                break;
+            case R.id.nav_report_client:
+                fragment = new ItemFragment();
+                break;
+            case R.id.nav_report_expense:
+                fragment = new ItemFragment();
+                break;
+            case R.id.nav_report_upcoming:
+                fragment = new ItemFragment();
                 break;
         }
 
@@ -172,13 +215,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
+    public void onFragmentInteraction(String s) {
 
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onFragmentInteraction(int fragmentType) {
+        if (fragmentType == UPCOMING_EVENTS) {
+            mFragmentManager.beginTransaction().addToBackStack(null).
+                    replace(R.id.fragmentContent, new ItemFragment()).commit();
+        } else if (fragmentType == EXPENSE_REPORTS) {
+            mFragmentManager.beginTransaction().addToBackStack(null).
+                    replace(R.id.fragmentContent, new ItemFragment()).commit();
+        }
     }
 
 
