@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -27,7 +30,7 @@ public class ClientDetailFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private Button editButton;
-    private EditText[] editables;
+    private ArrayList<EditText> editables;
     private EditText editName;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -76,26 +79,30 @@ public class ClientDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_client_detail, container, false);
 
         editButton = (Button) view.findViewById(R.id.buttonEdit);
-        ViewGroup group = ((ViewGroup) ((ViewGroup) view).getChildAt(0));
-        int cnt = group.getChildCount();
-        int j = 0;
 
-        editables = new EditText[cnt - 1];
-        for (int i = 0; i < cnt; i++) {
+        ViewGroup group = (ViewGroup) editButton.getParent();
+        editables = new ArrayList<>(group.getChildCount()-1);
+
+        for (int i = 0; i < group.getChildCount(); i++) {
             View aView = group.getChildAt(i);
             if (aView instanceof EditText) {
-                editables[j++] = (EditText) aView;
+                editables.add((EditText) aView);
             }
         }
+
+        Toast.makeText(getContext(), "Child "+group.getChildCount()
+                +""+editables.size(), Toast.LENGTH_LONG).show();
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isOK = editButton.getText().equals(getString(R.string.ok));
+
                 for (EditText editText : editables) {
-                    editText.setEnabled(!editText.isEnabled());
+                    editText.setEnabled(!isOK);
                 }
 
-                if (editButton.getText().equals(getString(R.string.ok))) {
+                if (isOK) {
                     editButton.setText(getString(R.string.edit));
                 } else {
                     editButton.setText(getString(R.string.ok));

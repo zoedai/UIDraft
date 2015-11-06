@@ -28,14 +28,7 @@
 
 
         </android.support.design.widget.AppBarLayout>
-        <!--<include layout="@layout/content_main" />-->
-        <!--fragment
-            android:id="@+id/fragmentContent"
-            android:name="com.simbiosys.uidraft.ItemFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            tools:layout="@layout/fragment_item_list" /-->
+
 
 <FrameLayout
     android:layout_width="match_parent"

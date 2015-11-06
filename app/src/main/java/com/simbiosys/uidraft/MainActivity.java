@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity
 
 
         mFragmentManager = getSupportFragmentManager();
-        if (savedInstanceState == null) {
-            mFragmentManager.beginTransaction().add(R.id.fragmentContent, new ItemFragment()).commit();
-        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //floating action button
@@ -118,11 +116,13 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
-//        if (savedInstanceState == null) {
-//            selectItem(0);
-//        }
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getActionBar().setHomeButtonEnabled(true);
+        if (savedInstanceState == null) {
+            mFragmentManager.beginTransaction().replace(R.id.fragmentContent, new ItemFragment())
+                    .commit();
+        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 
 
