@@ -1,15 +1,20 @@
 package com.simbiosys.uidraft;
 
-import android.app.Activity;
-import android.net.Uri;
+
+import android.content.Context;
+
 import android.os.Bundle;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.EditText;import android.widget.ListView;
+
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,6 +36,10 @@ public class ClientDetailFragment extends Fragment {
 
     private Button editButton;
     private ArrayList<EditText> editables;
+
+    private String[][] fakeList = {{"note1", "note2", "note3"},
+            {"Nov 6, 2015", "Nov 1, 2015", "Oct 14, 2015"}};
+
     private EditText editName;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -89,7 +98,7 @@ public class ClientDetailFragment extends Fragment {
                 editables.add((EditText) aView);
             }
         }
-        
+
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,9 +132,55 @@ public class ClientDetailFragment extends Fragment {
             }
         });
 
+        Button newNote = (Button) view.findViewById(R.id.btn_newnote);
+        newNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).replaceFragment(new NewNoteFragment(), true);
+            }
+        });
+
+        Button client_sms = (Button) view.findViewById(R.id.btn_sms);
+        Button client_email = (Button) view.findViewById(R.id.btn_emails);
+        client_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Email list", Toast.LENGTH_LONG).show();
+                ((MainActivity) getActivity()).replaceFragment(new ItemFragment(), true);
+            }
+        });
+
+        client_sms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "SMS list", Toast.LENGTH_LONG).show();
+                ((MainActivity) getActivity()).replaceFragment(new ItemFragment(), true);
+            }
+        });
+
+        fillList(view);
+
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
         return view;
+    }
+
+    private void fillList(View view) {
+        ArrayAdapter<String[]> adapter = new ArrayAdapter<String[]>(getContext(),
+                android.R.layout.simple_list_item_2, android.R.id.text1, fakeList) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(fakeList[0][position]);
+                text2.setText(fakeList[1][position]);
+                return view;
+            }
+        };
+        ListView notesList = (ListView) view.findViewById(R.id.notesList);
+        notesList.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,16 +192,15 @@ public class ClientDetailFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnFragmentInteractionListener) getActivity();
 
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(getActivity().toString()
                     + " must implement OnFragmentInteractionListener");
         }
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.simbiosys.uidraft;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -25,7 +26,8 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity
         implements
         ItemFragment.OnFragmentInteractionListener,
-        ClientDetailFragment.OnFragmentInteractionListener
+        ClientDetailFragment.OnFragmentInteractionListener,
+        NewNoteFragment.OnFragmentInteractionListener
 {
 
     private String[] mMenuTitles;
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 
 
         // drawer stuff
-        mMenuTitles = getResources().getStringArray(R.array.drawer_menu);
+//        mMenuTitles = getResources().getStringArray(R.array.drawer_menu);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mTitle = mDrawerTitle = getTitle();
@@ -85,17 +87,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-/*        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mMenuTitles));
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-                //todo: set title
-                mDrawerLayout.closeDrawer(mDrawerList);
-            }
-        });
-*/
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -129,6 +121,13 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
+        FragmentTransaction fragmentTransaction= mFragmentManager.beginTransaction();
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.replace(R.id.fragmentContent, fragment).commit();
+    }
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
@@ -234,5 +233,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
+    }
 }

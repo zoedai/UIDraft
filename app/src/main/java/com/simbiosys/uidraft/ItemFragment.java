@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.simbiosys.uidraft.dummy.DummyContent;
 
@@ -101,6 +102,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         super.onAttach(context);
         try {
             mListener = (OnFragmentInteractionListener) getActivity();
+
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
                     + " must implement OnFragmentInteractionListener");

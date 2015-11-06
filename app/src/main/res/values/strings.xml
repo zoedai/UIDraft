@@ -3,11 +3,11 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_activity_main">MainActivity</string>
-    <string-array name="drawer_menu">
-        <item>Clients</item>
-        <item>Travel</item>
-        <item>Expense</item>
-        <item>Report</item>
+    <string-array name="client_array">
+        <item>Client1</item>
+        <item>Client2</item>
+        <item>Client3</item>
+        <item>Client0</item>
     </string-array>
     <string name="clients">Clients</string>
     <string name="travel">Travel</string>
@@ -34,6 +34,7 @@
 
     <string name="notes">Notes</string>
     <string name="new_note">New Note</string>
+    <string name="client_name">Client Name</string>
     <string name="emails">Emails</string>
     <string name="sms">Messages</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
