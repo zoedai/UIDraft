@@ -89,9 +89,7 @@ public class ClientDetailFragment extends Fragment {
                 editables.add((EditText) aView);
             }
         }
-
-        Toast.makeText(getContext(), "Child "+group.getChildCount()
-                +""+editables.size(), Toast.LENGTH_LONG).show();
+        
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
