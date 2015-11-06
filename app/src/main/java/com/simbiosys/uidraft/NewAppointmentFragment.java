@@ -3,36 +3,29 @@ package com.simbiosys.uidraft;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ClientDetailFragment.OnFragmentInteractionListener} interface
+ * {@link NewAppointmentFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ClientDetailFragment#newInstance} factory method to
+ * Use the {@link NewAppointmentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClientDetailFragment extends Fragment {
+public class NewAppointmentFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private Button editButton;
-    private EditText[] editables;
-    private EditText editName;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    FloatingActionButton fab;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,11 +35,11 @@ public class ClientDetailFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientDetailFragment.
+     * @return A new instance of fragment NewAppointmentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ClientDetailFragment newInstance(String param1, String param2) {
-        ClientDetailFragment fragment = new ClientDetailFragment();
+    public static NewAppointmentFragment newInstance(String param1, String param2) {
+        NewAppointmentFragment fragment = new NewAppointmentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -54,7 +47,7 @@ public class ClientDetailFragment extends Fragment {
         return fragment;
     }
 
-    public ClientDetailFragment() {
+    public NewAppointmentFragment() {
         // Required empty public constructor
     }
 
@@ -65,69 +58,19 @@ public class ClientDetailFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_client_detail, container, false);
-
-        editButton = (Button) view.findViewById(R.id.buttonEdit);
-        ViewGroup group = ((ViewGroup) ((ViewGroup) view).getChildAt(0));
-        int cnt = group.getChildCount();
-        int j = 0;
-
-        editables = new EditText[cnt - 1];
-        for (int i = 0; i < cnt; i++) {
-            View aView = group.getChildAt(i);
-            if (aView instanceof EditText) {
-                editables[j++] = (EditText) aView;
-            }
-        }
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (EditText editText : editables) {
-                    editText.setEnabled(!editText.isEnabled());
-                }
-
-                if (editButton.getText().equals(getString(R.string.ok))) {
-                    editButton.setText(getString(R.string.edit));
-                } else {
-                    editButton.setText(getString(R.string.ok));
-                }
-            }
-        });
-
-        Button gotoUpcoming = (Button) view.findViewById(R.id.btn_upcoming);
-        Button gotoReport = (Button) view.findViewById(R.id.btn_expense_report);
-        gotoUpcoming.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(MainActivity.UPCOMING_EVENTS);
-            }
-        });
-        gotoReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(MainActivity.EXPENSE_REPORTS);
-            }
-        });
-
-        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
-        return view;
+        return inflater.inflate(R.layout.fragment_new_appointment, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(int fragmentType) {
-
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(fragmentType);
+            mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -136,18 +79,10 @@ public class ClientDetailFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
-
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        fab.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -168,9 +103,7 @@ public class ClientDetailFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(int fragmentType);
-
-
+        public void onFragmentInteraction(Uri uri);
     }
 
 }

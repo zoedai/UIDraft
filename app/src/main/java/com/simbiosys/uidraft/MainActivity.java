@@ -1,6 +1,7 @@
 package com.simbiosys.uidraft;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -44,8 +46,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFragmentManager = getSupportFragmentManager();
 
+        mFragmentManager = getSupportFragmentManager();
+        if (savedInstanceState == null) {
+            mFragmentManager.beginTransaction().add(R.id.fragmentContent, new ItemFragment()).commit();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //floating action button
@@ -128,12 +133,10 @@ public class MainActivity extends AppCompatActivity
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
 
-                new NavigationView.OnNavigationItemSelectedListener()
-                {
+                new NavigationView.OnNavigationItemSelectedListener() {
 
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem)
-                    {
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         return true;
@@ -229,6 +232,7 @@ public class MainActivity extends AppCompatActivity
                     replace(R.id.fragmentContent, new ItemFragment()).commit();
         }
     }
+
 
 
 }
