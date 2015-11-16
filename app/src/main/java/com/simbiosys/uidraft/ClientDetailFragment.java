@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,8 +87,15 @@ public class ClientDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_client_detail, container, false);
+        return view;
+    }
 
-        editButton = (Button) view.findViewById(R.id.buttonEdit);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FragmentActivity activity = getActivity();
+
+        editButton = (Button) activity.findViewById(R.id.buttonEdit);
 
         ViewGroup group = (ViewGroup) editButton.getParent();
         editables = new ArrayList<>(group.getChildCount()-1);
@@ -117,8 +125,8 @@ public class ClientDetailFragment extends Fragment {
             }
         });
 
-        Button gotoUpcoming = (Button) view.findViewById(R.id.btn_upcoming);
-        Button gotoReport = (Button) view.findViewById(R.id.btn_expense_report);
+        Button gotoUpcoming = (Button) activity.findViewById(R.id.btn_upcoming);
+        Button gotoReport = (Button) activity.findViewById(R.id.btn_expense_report);
         gotoUpcoming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +140,7 @@ public class ClientDetailFragment extends Fragment {
             }
         });
 
-        Button newNote = (Button) view.findViewById(R.id.btn_newnote);
+        Button newNote = (Button) activity.findViewById(R.id.btn_newnote);
         newNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,8 +148,8 @@ public class ClientDetailFragment extends Fragment {
             }
         });
 
-        Button client_sms = (Button) view.findViewById(R.id.btn_sms);
-        Button client_email = (Button) view.findViewById(R.id.btn_emails);
+        Button client_sms = (Button) activity.findViewById(R.id.btn_sms);
+        Button client_email = (Button) activity.findViewById(R.id.btn_emails);
         client_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,14 +166,13 @@ public class ClientDetailFragment extends Fragment {
             }
         });
 
-        fillList(view);
+        fillList(activity);
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
-        return view;
     }
 
-    private void fillList(View view) {
+    private void fillList(FragmentActivity activity) {
         ArrayAdapter<String[]> adapter = new ArrayAdapter<String[]>(getContext(),
                 android.R.layout.simple_list_item_2, android.R.id.text1, fakeList) {
             @Override
@@ -179,7 +186,7 @@ public class ClientDetailFragment extends Fragment {
                 return view;
             }
         };
-        ListView notesList = (ListView) view.findViewById(R.id.notesList);
+        ListView notesList = (ListView) activity.findViewById(R.id.notesList);
         notesList.setAdapter(adapter);
     }
 
